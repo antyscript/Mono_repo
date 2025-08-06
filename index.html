@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>My small Projects</title>
+  <style>
+    *{
+  margin: 0;
+  padding: 0;
+}
+html{
+  scroll-behavior: smooth;
+}
+body{
+  height: 100vh;
+  color: white;
+  background-color: red;
+}
+header{
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #000;
+  width: 100vw;
+  height: 30px;
+  z-index: 1;
+}
+header *{
+  margin: 10px;
+ text-transform: uppercase;
+ font-size: 12px;
+}
+.menu{
+  position: relative;
+  top: 30px;
+  width: 100vw;
+  height: calc(100vh - 30px);
+  background-color: #222;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+}
+.image img{
+  width: 150px;
+  border-radius: 50%;
+  border: 5px solid #333;
+}
+.projects{
+  padding: 50px 0;
+  background-color: #333;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  gap: 15px;
+}
+footer{
+  width: 100vw;
+  height: 40px;
+  background-color: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.projects div{
+  width: 275px;
+  height: 400px;
+  background-color: #444;
+  border-radius: 10px;
+  box-shadow: 0 0 7px #222;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+.projects div button{
+  width: 100px;
+  padding: 4px 8px;
+  border: 2px solid #444;
+  color: white;
+  border-radius: 6px;
+  background-color: #333;
+}
+.projects div button:active{
+  transform: scale(1.09) rotate(-5deg);
+  box-shadow: 0 0 6px #333;
+}
+@media (min-width: 600px){
+  .projects{
+    grid-template-columns: 1fr 1fr;
+  }
+  .menu{
+    flex-direction: row;
+  }
+  .menu img{
+    width:300px;
+  }
+    .content{
+    font-size: 30px !important;
+    line-height: 70px !important;
+  }
+
+}
+@media (min-width: 830px){
+  .projects{
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+@media (min-width: 1150px){
+  .projects{
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+  .content{
+    font-size: 50px !important;
+    line-height: 80px !important;
+  }
+
+}
+.image::before{
+  content: '';
+  width: 150px;
+  height: 150px;
+  background-color:transparent;
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  transform: translate(1.2%,1.2%);
+  border: 3px solid #222;
+}
+.content{
+  text-align: center;
+  margin: 0 10px 0 10px;
+  font-size: 19px;
+    line-height: 50px;
+  white-space: pre-line;
+}
+a{
+  text-decoration: underline white;
+  color: white;
+}
+#p div img{
+  width: 80% ;
+  border-radius: 9px;
+}
+#p div p{
+  width: 90%;
+  text-align: center;
+}
+#p div h5{
+  text-transform: capitalize;
+}
+#p div:hover{
+  scale: 1.05;
+}
+  </style>
+</head>
+<body>
+  <header>
+    <h4>antyscript</h4>
+    <p><a href="#p">projet</a></p>
+  </header>
+  <main>
+    <section class="menu">
+      <div class="content">
+      <h3>welcome ...</h3>
+      <p>you'll find a list of my simple project, thanks for you,
+      Some of my early projects</p>
+      </div>
+      <div class="image">
+        <img src="main/Antyscript.jpg" alt="i don't know why i use this picture on my profile but, idc">
+      </div>
+    </section>
+    <section class="projects" id="p">
+      <div>
+        <h5>to do list</h5>
+        <img src="main/todo.jpg" alt="this project photo">
+        <p>simple todo list project, i use only html css and some javascript</p>
+        <button>Explore</button>
+      </div>
+      <div>
+        <h5>Rock paper scissors</h5>
+        <img src="main/game.jpg" alt="this project photo">
+        <p>Play this game right now, info : html/css/js</p>
+        <button>Explore</button>
+      </div>
+      <div>
+        <h5>smart office</h5>
+        <img src="main/smart.jpg" alt="this project photo">
+        <p>Simulating an Arabic e-services website experience</p>
+        <button>Explore</button>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>© <a href="https://github.com/antyscript">antyscript</a></p>
+  </footer>
+</body>
+</html>
