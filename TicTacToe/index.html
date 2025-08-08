@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Tic Tac Toe Game</title>
+</head>
+<style>
+html{
+  font-size: 16px;
+}
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  body{
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .btn{
+    width: 5rem;
+    height: 5rem;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    cursor: pointer;
+  }
+  .btn:active{
+    background-color: #f0f0f0f0;
+  }
+  main{
+    background-color: black;
+    box-shadow: 0px 0px 5px rgb(0,0,0,0.4);
+    border-radius: 6px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 0.09rem;
+  }
+  h2,h4{
+    margin: 10px;
+  }
+  @media (min-width: 600px){
+    html{
+      font-size: 30px;
+    }
+  }
+  @media (min-width: 900px){
+    html{
+      font-size: 35px;
+    }
+    body{
+      height: 100vh;
+    }
+  }
+  span{
+    padding: 0.1rem .2rem;
+    background-color: #cfcfcf;
+    text-decoration: underline;
+    border-radius: 0.4rem;;
+  }
+</style>
+<body>
+  <h2>Tic Tac Toe Game !</h2>
+  <h4> you're <span onclick="change()" id="one">X</span> and me <span onclick="change()" id="zero">O</span></h4>
+  <main>
+    <div class="btn" id="1"></div>
+    <div class="btn" id="2"></div>
+    <div class="btn" id="3"></div>
+    <div class="btn" id="4"></div>
+    <div class="btn" id="5"></div>
+    <div class="btn" id="6"></div>
+    <div class="btn" id="7"></div>
+    <div class="btn" id="8"></div>
+    <div class="btn" id="9"></div>
+  </main>
+  <h4 id="msg">Your turn</h5>
+  
+  <script>
+   let game = true;
+   let X = 'x';
+   let O = 'o';
+   const btns = document.querySelectorAll('.btn');
+   const msg = document.getElementById('msg');
+   let yourTurn = true;
+   
+   
+   function change(){
+     let z = document.getElementById('zero');
+     let s = document.getElementById('one')
+     z.innerHTML === X ? s.innerHTML = O : z.innerHTML = X;
+     s.innerHTML === O ? s.innerHTML = X : s.innerHTML = O;
+     
+     let temp = X; X = O; O = temp;
+   }
+   
+   function checkDraw(){
+       msg.innerHTML = 'Draw !';
+       btns.forEach(btn => btn.style.backgroundColor = '#cfcfcf')
+       game = false;
+       wait();
+ }
+   function check(m,m1,m2,m3){
+     let btn1 = document.getElementById(`${m1}`) 
+     let btn2 = document.getElementById(`${m2}`) 
+     let btn3 = document.getElementById(`${m3}`) 
+     let btnss = [btn1,btn2,btn3]
+     if (btn1.innerHTML === m && btn2.innerHTML === m && btn3.innerHTML === m){
+       game = false;
+       wait();
+      if (m === X){
+      btnss.forEach(b=>{b.style.backgroundColor='#c0ff86';
+       msg.innerHTML = 'you win !!';
+      })}else if (m === O){
+      btnss.forEach(b=>{b.style.backgroundColor='#ff8686';
+        msg.innerHTML = 'you lose !'
+      })
+     }
+     } 
+   }
+   function check2(){
+      check(X,1,2,3);     check(O,1,2,3);
+      check(X,2,5,8);     check(O,2,5,8);
+      check(X,1,4,7);     check(O,1,4,7);
+      check(X,3,6,9);     check(O,3,6,9);
+      check(X,4,5,6);     check(O,4,5,6);
+      check(X,7,8,9);     check(O,7,8,9);
+      check(X,1,5,9);     check(O,3,5,7)
+      check(X,3,5,7);     check(O,1,5,9);
+
+   }
+   
+   
+   function gamePlay(move){
+     if (move.innerHTML === '' && yourTurn){
+       move.innerHTML = X;
+     }
+     check2();
+     if (!game) return;
+   let emptyBtns = Array.from(btns).filter(btn => btn.innerHTML === '');
+  if (emptyBtns.length === 0){ checkDraw(); return};
+
+  let jsMove = emptyBtns[Math.floor(Math.random() * emptyBtns.length)];
+     if (jsMove && jsMove.innerHTML === ''){
+       yourTurn = false
+         msg.innerHTML = `My turn ...`;
+     let promise = new Promise( (res, rej) => {
+       setTimeout(()=> {
+       jsMove.innerHTML = O;
+     res();
+     }, 1000)
+     })
+     promise.then( () => { 
+     yourTurn = true;
+     document.getElementById('msg').innerHTML = 'Your turn';
+       check2()
+  
+
+     })
+     }
+   }
+   
+   
+   btns.forEach(btn => {
+     btn.addEventListener('click', b => {
+       if (b.target.innerHTML === X || b.target.innerHTML === O || !game || !yourTurn){
+         return
+       }
+       gamePlay(b.target);
+     })
+   })
+   
+   
+   
+   
+   function waits(ms,text){
+     return new Promise(res => { 
+       setTimeout(_=> {
+       msg.innerHTML = text;
+       res()},ms)
+     })
+   }
+   
+   
+   async function wait(){
+     await waits(1000, 'replay .')
+     await waits(500, 'replay ..')
+     await waits(500, 'replay ...')
+     await waits(1000, 'replay ....')
+     btns.forEach(btn => {
+       btn.innerHTML = '';
+       btn.style.backgroundColor = 'white'; 
+       
+     })
+       msg.innerHTML = 'Your turn';
+       game = true;
+       yourTurn = true;
+     return
+   }
+   
+  
+  </script>
+</body>
+</html>
