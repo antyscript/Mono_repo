@@ -25,4 +25,9 @@ click here for go to the <a href="https://antyscript.github.io/Mono_repo/">home<
     <td>html css js</td>
     <td><a href="https://antyscript.github.io/Mono_repo/Smartoffice/index.html">link</a></td>
   </tr>
+  <tr>
+    <td>Tic Tac Toe Game</td>
+    <td>html css js</td>
+    <td><a href="https://antyscript.github.io/Mono_repo/TicTacToe/index.html">link</a></td>
+  </tr>
 </table>
