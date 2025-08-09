@@ -5,8 +5,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>rock sesiser paper game</title>
-  <link rel="stylesheet" href="js&css/style.css">
 </head>
+<style>
+  *{
+  margin: 0px;
+  padding: 0px;
+  color: #999;
+}
+body{
+  background-color: #222;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+  font-size: 4vw;
+}
+.heed{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80vw;
+}
+.heed *{
+  margin: 10px 0px;
+}
+.chose{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+.chose div, .heed div{
+  background-color: #333;
+  width: 15vw;
+  height: 15vw;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.win:before{
+  content: ' win: ';
+  color: green;
+}
+.lose:before{
+  content: '  lose: ';
+  color: red;
+}
+.draw:before{
+  content: '  draw: ';
+  color: #888;
+}
+</style>
 <body>
   <div class="heed">
     <p><span class="win">0</span><span class="lose">0</span><span class="draw">0</span></p>
@@ -22,6 +76,90 @@
       <div class="sesiser play">✌</div>
       <div class="paper play">🤚</div>
   </div>
-  <script src="js&css/main.js"></script>
+  <script>
+    let play = document.querySelectorAll('.play');
+let result = document.querySelector('.result');
+let rock = document.querySelector('.rock');
+let win = document.querySelector('.win');
+let lose = document.querySelector('.lose');
+let draw = document.querySelector('.draw');
+let sesiser = document.querySelector('.sesiser');
+let paper = document.querySelector('.paper');
+let random = document.querySelector('.random');
+let player = null;
+let option = ['✊', '✌','🤚'];
+let op = option[Math.floor(Math.random()*3)] ;
+result.innerHTML = 'chose any hand for play';
+
+if (sessionStorage.getItem('draw')){
+  draw.innerHTML = sessionStorage.getItem('draw');
+}else{
+  draw.innerHTML = '0'
+}
+if (sessionStorage.getItem('win')){
+  win.innerHTML = sessionStorage.getItem('win');
+}else{
+  win.innerHTML = '0';
+}
+if (sessionStorage.getItem('lose')){
+  lose.innerHTML = sessionStorage.getItem('lose');
+}else{
+  lose.innerHTML = '0'
+}
+
+
+
+
+play.forEach(function(btn) {
+  btn.addEventListener('click', _ => {
+    play.forEach(p => p.style.display = 'none');
+    player = btn;
+    btn.style.cssText = 'display: flex';
+    
+    random.innerHTML = op
+    
+    if (btn.innerHTML === op){
+      result.innerHTML = 'draw !';
+      draw.innerHTML = parseInt(draw.innerHTML) +1
+    }else if (btn.innerHTML === '✊' && op === '🤚'){
+      result.innerHTML = 'you lose !'
+      lose.innerHTML = parseInt(lose.innerHTML) +1
+    }else if (btn.innerHTML === '✊' && op === '✌'){
+      result.innerHTML = 'you win !'
+      win.innerHTML = parseInt(win.innerHTML) +1
+    }else if (btn.innerHTML === '🤚' && op === '✊'){
+      result.innerHTML = 'you win !'
+      win.innerHTML = parseInt(win.innerHTML) +1
+    }else if (btn.innerHTML === '🤚' && op === '✌'){
+      result.innerHTML = 'you lose !'
+      lose.innerHTML = parseInt(lose.innerHTML) +1
+    }else if (btn.innerHTML === '✌' && op === '✊'){
+      result.innerHTML = 'you lose !'
+      lose.innerHTML = parseInt(lose.innerHTML) +1
+    }else if (btn.innerHTML === '✌' && op === '🤚'){
+      result.innerHTML = 'you win !'
+      win.innerHTML = parseInt(win.innerHTML) +1
+    };
+    
+     sessionStorage.setItem('draw', draw.innerHTML);
+     sessionStorage.setItem('win', win.innerHTML);
+     sessionStorage.setItem('lose', lose.innerHTML);
+  
+    setTimeout( _ => window.location.reload(), 500);
+    
+  });
+});
+
+function replay(){
+  result.innerHTML = 'wait ...';
+  setTimeout( _ => window.location.reload(), 500);
+  draw.innerHTML = '0';
+  win.innerHTML = '0';
+  lose.innerHTML = '0';
+  sessionStorage.clear();
+}
+
+
+  </script>
 </body>
 </html>

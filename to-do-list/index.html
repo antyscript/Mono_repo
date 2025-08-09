@@ -5,7 +5,108 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>to do list</title>
-  <link rel="stylesheet" href="css/tstyle.css">
+  <style>
+    *{
+  margin: 0;
+  padding: 0;
+}
+body{
+  background-image: linear-gradient(to right,#f869d5, #5650de);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(-20%);
+  color: white;
+}
+main{
+  background-color: rgb(225,225,225,0.3);
+  border-radius: 30px;
+  padding: 30px;
+  margin-top: 30vh;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+h2{
+  font-size: 29px;
+  letter-spacing: -1px;
+  font-family: Times New Roman, Monospace, Sans-Serif;
+  margin: 20px 0;
+  text-transform: capitalize;
+}
+.add{
+  background-image: linear-gradient(to left,#f869d5, #5650de);
+  padding: 2px;
+  border-radius: 6px;
+  height: 25px;
+}
+#buttonadd{
+  width: 23%;
+  height: 99%;
+  background-color: #5650de9b;
+  border: 1px solid blue;
+  color: white;
+  border-radius: 6px;
+}
+#input{
+  background-color: transparent;
+  border-radius: 6px;
+  width: 74%;
+  border: 1px solid white;
+  outline: none;
+  height: 99%;
+  color: white;
+}
+table{
+  width: 100%;
+  margin-top: 10px;
+  text-align: center;
+  overflow: hidden;
+  table-layout: fixed;
+}
+thead{
+  background-image: linear-gradient(to right,#f869d5, #5650de);
+}
+#name{
+  width: 50%;
+}
+tbody tr td:first-child{
+  word-wrap: break-word;
+  word-spacing: normal;
+}
+th{
+  border-radius: 6px;
+  text-transform: uppercase;
+  padding: 4px;
+  font-size: 5px;
+}
+tbody tr{
+  background-color: rgb(248,105,213,0.3);
+}
+tbody tr td{
+  border-radius: 8px;
+  border: 1px solid #ffc0cb7a;
+}
+tbody button{
+  width: 80%;
+  margin: 10% 0;
+  border-radius: 6px;
+  border: none;
+  background-color: #5650de9b;
+  color: white;
+  padding: 30% 0;
+  font-size: 7px;
+  text-transform: uppercase;
+}
+tbody button:hover, #buttonadd:hover{
+  background-color: #827dee9b;
+  scale: 1.05;
+}
+.box{
+  accent-color: black;
+}
+  </style>
 </head>
 <body>
  <main>
@@ -41,6 +142,94 @@
     </table>
   </div>
  </main>
-  <script src="js/tjs.js"></script>
+  <script>
+
+
+let table = document.getElementById('tbody');
+let input = document.getElementById('input');
+let buttonadd = document.getElementById('buttonadd')
+var box = document.querySelectorAll('.box');
+var noms = document.querySelectorAll('.nom');
+let data = []
+
+
+let datas = localStorage.getItem('datas')
+if (datas){
+  datas = JSON.parse(datas)
+  datas.forEach(addi)
+}
+
+table.addEventListener('change', function(e) {
+  if (e.target.classList.contains('box')) {
+    let tr = e.target.closest('tr');
+    let nom = tr.querySelector('.nom');
+    if (e.target.checked) {
+      nom.style.cssText = 'text-decoration: line-through #666; color:#666;';
+    } else {
+      nom.style.cssText = 'text-decoration: none;';
+    }
+  }
+});
+
+
+
+table.addEventListener('click', function(e) {
+  if (e.target.classList.contains('del')) {
+    let tr = e.target.closest('tr');
+    let nomText = tr.querySelector('.nom').textContent;
+    tr.remove();
+    data = data.filter(item => item !== nomText);
+    localStorage.setItem('datas', JSON.stringify(data));
+  }
+});
+
+let correct = null
+
+table.addEventListener('click', function(e){
+  if (e.target.classList.contains('changet')){
+    let tr = e.target.closest('tr');
+    let nom = tr.querySelector('.nom');
+    input.value = nom.textContent;
+    correct = nom
+    }
+});
+
+
+
+buttonadd.onclick = function(){
+  if (correct){
+    correct.textContent = input.value
+    correct = null
+    input.value = "";
+    
+  }else{
+  addi(input.value);
+  input.value = "";
+ }
+};
+
+
+
+
+function addi(name){
+  if (name.length < 1){return}
+    table.insertAdjacentHTML('beforeend',
+    `<tr>
+    <td class="nom">${name}</td>
+    <td><input type="checkbox" class="box"></td>
+    <td><button class="changet">change</button></td>
+    <td><button class="del">delete</button></td>
+  </tr>
+`);
+     data.push(name);
+     localStorage.setItem('datas', JSON.stringify(data))
+  };
+
+
+
+
+
+
+  </script>
 </body>
 </html>
